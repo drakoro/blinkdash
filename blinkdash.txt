@@ -1,0 +1,49 @@
+using UnityEngine;
+using System.Collections;
+[RequireComponent(typeof(ParticleSystem))]
+
+public class BlinkDashClick : MonoBehaviour {
+
+	public GameObject CharacterController;
+	public GameObject BDbox1;
+	public GameObject BDbox2;
+
+	private ParticleSystem _psystem;
+
+		void Awake() {
+			_psystem = GetComponent<ParticleSystem> ();
+		}
+
+		void OnTriggerEnter (Collider col)  {
+
+		if (col.gameObject.tag == "Player") {
+
+			_psystem.Play ();
+		}
+
+		}
+		void OnTriggerExit (Collider col) {
+
+		if (col.gameObject.tag == "Player") {
+			
+			_psystem.Stop ();
+		}
+	}
+		
+	void OnMouseDown() {
+		
+			Debug.Log ("blink dash!");
+
+		Destroy (CharacterController);
+
+		if (gameObject == BDbox1) {
+
+			CharacterController = Instantiate (PrefabManager.Instance.CharacterPrefab, BDbox1.transform.position, BDbox1.transform.rotation) as GameObject;
+		}
+
+		if (gameObject == BDbox2) {
+
+			CharacterController = Instantiate (PrefabManager.Instance.CharacterPrefab, BDbox2.transform.position, BDbox2.transform.rotation) as GameObject;
+		}
+	}
+}
